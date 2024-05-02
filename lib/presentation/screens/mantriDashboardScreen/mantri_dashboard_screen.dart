@@ -1,5 +1,6 @@
 import 'package:emantrimandal/presentation/blocs/itemsBloc/items_bloc.dart';
 import 'package:emantrimandal/presentation/blocs/mantriDashboardBloc/mantri_dashboard_bloc.dart';
+import 'package:emantrimandal/presentation/screens/itemDetailsScreen/item_details_screen.dart';
 import 'package:emantrimandal/presentation/screens/vedioCallScreen/background_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:emantrimandal/core/utils/singleton.dart';
@@ -142,7 +143,9 @@ class _MantriDashboardScreenState extends State<MantriDashboardScreen> {
     var i = index + 1;
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, RoutePaths.itemDetailsScreen);
+        print("hi");
+        Navigator.of(context).push(MaterialPageRoute(builder: (_)=>ItemDetailsScreen()));
+        // Navigator.pushNamed(context, RoutePaths.itemDetailsScreen);
       },
       child: Container(
         height: 100,

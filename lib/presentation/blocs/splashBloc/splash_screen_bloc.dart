@@ -10,7 +10,6 @@ import 'package:emantrimandal/domain/usecase/local/save_meeting_details_usecase.
 import 'package:equatable/equatable.dart';
 import 'package:emantrimandal/domain/entity/remote/request_params/get_details_params.dart';
 import 'package:flutter/services.dart';
-import 'package:get_mac_address/get_mac_address.dart';
 import 'package:meta/meta.dart';
 import '../../../core/error/failure.dart';
 import '../../../core/error/network_error.dart';
@@ -42,13 +41,13 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
   FutureOr<void> generateTokenDataEvent(
       GenerateTokenDataEvent event, Emitter<SplashScreenState> emit) async {
     emit(GenerateTokenLoading());
-    final _getMacAddressPlugin = GetMacAddress();
-    String macAddress;
+    // final _getMacAddressPlugin = GetMacAddress();
+    // String macAddress;
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      macAddress = await _getMacAddressPlugin.getMacAddress() ?? 'Unknown mac address';
-      MySingleton().MAC = macAddress;
+      // macAddress = await _getMacAddressPlugin.getMacAddress() ?? 'Unknown mac address';
+      // MySingleton().MAC = macAddress;
       GenerateTokenParams generateTokenParams = GenerateTokenParams(
           MACUID: MySingleton().MAC,
           MACKey: MySingleton().MACKEY,
@@ -72,7 +71,7 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
         },
       );
     } on PlatformException {
-      macAddress = 'Failed to get mac address.';
+      // macAddress = 'Failed to get mac address.';
     }
   }
 

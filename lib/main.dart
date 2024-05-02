@@ -13,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/di/inject.dart';
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await initDependencies();
   I.configureDependencies();

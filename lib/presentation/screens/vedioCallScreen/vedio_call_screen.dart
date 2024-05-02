@@ -15,25 +15,23 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   @override
   Widget build(BuildContext context) {
     return PIPView(
+      floatingHeight: 150,
       builder: (context, isFloating) {
         return Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () {
+                PIPView.of(context)!.presentBelow(MantriDashboardScreen());
+                // do something
+              },
+            ),
             backgroundColor: Colors.deepOrange,
             title: Text(" Vedio Call"),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.videocam_rounded,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  PIPView.of(context)!.presentBelow(MantriDashboardScreen());
-                  // do something
-                },
-              )
-            ],
           ),
-          // body:  dashboardBody()
+          body:  Center(
+            child: Text("VEDIO CALL IS HERE"),
+          )
         );
       },
     );
