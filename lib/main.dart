@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:emantrimandal/core/utils/get_mac_address.dart';
 import 'package:emantrimandal/presentation/blocs/itemsBloc/items_bloc.dart';
 import 'package:emantrimandal/presentation/blocs/splashBloc/splash_screen_bloc.dart';
 import 'package:emantrimandal/presentation/blocs/departmentItemListBloc/department_item_list_bloc.dart';
@@ -17,6 +20,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initDependencies();
   I.configureDependencies();
+  if (Platform.isAndroid) {
+    MacAddress.getMacAddress();
+  }
+
   runApp(const MyApp());
 }
 

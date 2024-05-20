@@ -1,8 +1,10 @@
 #include "flutter_window.h"
-
 #include <optional>
-
 #include "flutter/generated_plugin_registrant.h"
+#include <flutter/binary_messenger.h>
+#include <flutter/standard_method_codec.h>
+#include <flutter/method_channel.h>
+#include <flutter/method_result_functions.h>
 
 FlutterWindow::FlutterWindow(const flutter::DartProject& project)
     : project_(project) {}
