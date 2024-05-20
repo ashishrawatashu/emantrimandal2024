@@ -8,11 +8,11 @@ class MacAddress {
   static Future<String> getMacAddress() async {
     try {
       _channel.invokeMethod('getMacAddress');
-      print('Received erffrfrefrfrfrf: erferfrfre');
-      Future.delayed(Duration(seconds: 5), () {
-        _channel.setMethodCallHandler(_handleMethod);
-        print("MAC ADDRESS" + macAddress);
-      });
+
+      // Future.delayed(Duration(seconds: 5), () {
+      //   _channel.setMethodCallHandler(_handleMethod);
+      //   print("MAC ADDRESS" + macAddress);
+      // });
 
       return macAddress;
     } on PlatformException catch (e) {

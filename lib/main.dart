@@ -22,6 +22,8 @@ void main() async {
   I.configureDependencies();
   if (Platform.isAndroid) {
     MacAddress.getMacAddress();
+  }else if (Platform.isWindows) {
+    MacAddress.getMacAddress();
   }
 
   runApp(const MyApp());

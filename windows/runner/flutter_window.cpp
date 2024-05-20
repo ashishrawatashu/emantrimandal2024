@@ -12,6 +12,10 @@ FlutterWindow::FlutterWindow(const flutter::DartProject& project)
 FlutterWindow::~FlutterWindow() {}
 
 bool FlutterWindow::OnCreate() {
+
+
+
+
   if (!Win32Window::OnCreate()) {
     return false;
   }
@@ -26,6 +30,14 @@ bool FlutterWindow::OnCreate() {
   if (!flutter_controller_->engine() || !flutter_controller_->view()) {
     return false;
   }
+
+    // the plugins registrations
+    RegisterPlugins(flutter_controller_->engine());
+    // initialize method channel here
+    initMethodChannel(flutter_controller_->engine());
+
+    run_loop_->RegisterFlutterInstance(flutter_controller_->engine());
+
   RegisterPlugins(flutter_controller_->engine());
   SetChildContent(flutter_controller_->view()->GetNativeWindow());
 
@@ -39,6 +51,33 @@ bool FlutterWindow::OnCreate() {
   flutter_controller_->ForceRedraw();
 
   return true;
+}
+
+
+void initMethodChannel(flutter::FlutterEngine* flutter_instance) {
+    // name your channel
+    const static std::string channel_name("mac_address");
+
+    auto channel =
+            std::make_unique<flutter::MethodChannel<>>(
+                    flutter_instance->messenger(), channel_name,
+                    &flutter::StandardMethodCodec::GetInstance());
+
+    channel->SetMethodCallHandler(
+            [](const flutter::MethodCall<>& call,
+               std::unique_ptr<flutter::MethodResult<>> result) {
+
+                // cheack method name called from dart
+                if (call.method_name().compare("getMacAddress") == 0) {
+
+                    // do whate ever you want
+
+                    result->Success("pass result here");
+                }
+                else {
+                    result->NotImplemented();
+                }
+            });
 }
 
 void FlutterWindow::OnDestroy() {
