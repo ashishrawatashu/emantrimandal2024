@@ -7,12 +7,14 @@ class MacAddress {
 
   static Future<String> getMacAddress() async {
     try {
-      _channel.invokeMethod('getMacAddress');
 
-      // Future.delayed(Duration(seconds: 5), () {
-      //   _channel.setMethodCallHandler(_handleMethod);
-      //   print("MAC ADDRESS" + macAddress);
-      // });
+      // _channel.invokeMethod('getMacAddress');
+      print(await _channel.invokeMethod("getMacAddress"));
+
+      Future.delayed(Duration(seconds: 3), () async {
+        _channel.setMethodCallHandler(_handleMethod);
+         print("MAC ADDRESS=====" + macAddress);
+      });
 
       return macAddress;
     } on PlatformException catch (e) {
@@ -25,10 +27,9 @@ class MacAddress {
     print("1====>${call.method}");
     switch (call.method) {
       case 'getMacAddress':
-        print("1===>");
         macAddress = call.arguments;
-        print("MAC ADDRESS" + call.arguments);
-        print("MAC ADDRESS" + macAddress);
+        print("MACADDRESS==1" + call.arguments);
+        print("MACADDRESS==2" + macAddress);
     }
   }
 }

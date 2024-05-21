@@ -20,13 +20,35 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initDependencies();
   I.configureDependencies();
-  if (Platform.isAndroid) {
-    MacAddress.getMacAddress();
-  }else if (Platform.isWindows) {
-    MacAddress.getMacAddress();
-  }
 
-  runApp(const MyApp());
+  // MethodChannel channel = const MethodChannel('mac_address');
+  // print(await channel.invokeMethod("getMacAddress"));
+  //
+  // if (Platform.isAndroid) {
+  //   MacAddress.getMacAddress();
+  // }else if (Platform.isWindows) {
+  //   MacAddress.getMacAddress();
+  // }
+
+
+  String macAddress = await getMacAddress();
+  print('Received MAC address: $macAddress');
+
+
+  // runApp(const MyApp());
+}
+
+
+Future<String> getMacAddress() async {
+  MethodChannel channel = const MethodChannel('mac_address');
+
+  try {
+    final String result = await channel.invokeMethod('getMacAddress');
+    return result;
+  } on PlatformException catch (e) {
+    print("Failed to get mac address: '${e.message}'.");
+    return ""; // Return an empty string or handle the error as needed
+  }
 }
 
 class MyApp extends StatelessWidget {
