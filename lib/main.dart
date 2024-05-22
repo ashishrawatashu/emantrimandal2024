@@ -13,7 +13,6 @@ import 'package:emantrimandal/main/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'core/di/inject.dart';
 void main() async {
 
@@ -21,35 +20,13 @@ void main() async {
   await initDependencies();
   I.configureDependencies();
 
-  // MethodChannel channel = const MethodChannel('mac_address');
-  // print(await channel.invokeMethod("getMacAddress"));
-  //
-  // if (Platform.isAndroid) {
-  //   MacAddress.getMacAddress();
-  // }else if (Platform.isWindows) {
-  //   MacAddress.getMacAddress();
-  // }
 
+  runApp(const MyApp());
 
-  String macAddress = await getMacAddress();
-  print('Received MAC address: $macAddress');
-
-
-  // runApp(const MyApp());
 }
 
 
-Future<String> getMacAddress() async {
-  MethodChannel channel = const MethodChannel('mac_address');
 
-  try {
-    final String result = await channel.invokeMethod('getMacAddress');
-    return result;
-  } on PlatformException catch (e) {
-    print("Failed to get mac address: '${e.message}'.");
-    return ""; // Return an empty string or handle the error as needed
-  }
-}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

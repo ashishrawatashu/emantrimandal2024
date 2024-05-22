@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:emantrimandal/core/error/failure.dart';
 import 'package:emantrimandal/data/model/getMeetingsItemsModel/departments_model.dart';
@@ -15,6 +16,7 @@ import 'package:emantrimandal/data/model/getMeetingsItemsModel/get_meetings_item
 import 'package:emantrimandal/domain/entity/remote/request_params/get_meeting_items_params.dart';
 import 'package:meta/meta.dart';
 import '../../../core/error/network_error.dart';
+import '../../../core/utils/get_mac_address.dart';
 import '../../../core/utils/singleton.dart';
 import '../../../domain/usecase/remote/get_meetings_items_usecase.dart';
 
@@ -46,8 +48,15 @@ class DownloadMeetingItemsBloc
   FutureOr<void> getMeetingItemsEvent(GetMeetingItemsEvent event,
       Emitter<DownloadMeetingItemsState> emit) async {
     emit(GetMeetingItemsLoading());
-    GetMeetingItemsParams getMeetingItemsParams = GetMeetingItemsParams(
-        MAC: MySingleton().MAC, token: MySingleton().TOKEN);
+    // if (Platform.isAndroid) {
+    //   MacAddress.getMacAddress();
+    // }else if (Platform.isWindows) {
+    //   MySingleton().MAC = await MacAddress.getMacAddressForWindows();
+    // }
+
+
+
+    GetMeetingItemsParams getMeetingItemsParams = GetMeetingItemsParams(MAC: MySingleton().MAC, token: MySingleton().TOKEN);
     final result =
         await _getMeetingsItemsUseCase.execute(params: getMeetingItemsParams);
     result.fold(

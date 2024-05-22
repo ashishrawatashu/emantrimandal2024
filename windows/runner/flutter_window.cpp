@@ -65,7 +65,8 @@ void initMethodChannel(flutter::FlutterEngine* flutter_instance) {
                     flutter::EncodableValue res(macAddress);
                     result->Success(res);
                      } else {
-                        result->Error("MAC_ADDRESS_NOT_FOUND", "Failed to retrieve MAC address.");
+                     flutter::EncodableValue res("N/A");
+                     result->Success(res);
                     }
                 }
                 else {

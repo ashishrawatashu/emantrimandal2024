@@ -7,15 +7,12 @@ class MacAddress {
 
   static Future<String> getMacAddress() async {
     try {
-
       // _channel.invokeMethod('getMacAddress');
       print(await _channel.invokeMethod("getMacAddress"));
-
-      Future.delayed(Duration(seconds: 3), () async {
+      Future.delayed(Duration(seconds: 2), () async {
         _channel.setMethodCallHandler(_handleMethod);
          print("MAC ADDRESS=====" + macAddress);
       });
-
       return macAddress;
     } on PlatformException catch (e) {
       print("Failed to get MAC address: '${e.message}'.");
@@ -30,6 +27,19 @@ class MacAddress {
         macAddress = call.arguments;
         print("MACADDRESS==1" + call.arguments);
         print("MACADDRESS==2" + macAddress);
+    }
+  }
+
+
+
+  static Future<String> getMacAddressForWindows() async {
+    MethodChannel channel = const MethodChannel('mac_address');
+    try {
+      final String result = await channel.invokeMethod('getMacAddress');
+      return result;
+    } on PlatformException catch (e) {
+      print("Failed to get mac address: '${e.message}'.");
+      return ""; // Return an empty string or handle the error as needed
     }
   }
 }

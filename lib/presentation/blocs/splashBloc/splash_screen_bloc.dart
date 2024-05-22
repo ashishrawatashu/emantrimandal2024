@@ -38,8 +38,7 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
     on<GetMeetingDetailsEvent>(getMeetingDetailsEvent);
   }
 
-  FutureOr<void> generateTokenDataEvent(
-      GenerateTokenDataEvent event, Emitter<SplashScreenState> emit) async {
+  FutureOr<void> generateTokenDataEvent(GenerateTokenDataEvent event, Emitter<SplashScreenState> emit) async {
     emit(GenerateTokenLoading());
     // final _getMacAddressPlugin = GetMacAddress();
     // String macAddress;
@@ -53,8 +52,7 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
           MACKey: MySingleton().MACKEY,
           Lat: "0.0",
           Longt: "0.0");
-      final result =
-          await _generateTokenUseCase.execute(params: generateTokenParams);
+      final result = await _generateTokenUseCase.execute(params: generateTokenParams);
       result.fold(
         (error) {
           emit(GenerateTokenError(error));
