@@ -36,6 +36,7 @@ class MacAddress {
     MethodChannel channel = const MethodChannel('mac_address');
     try {
       final String result = await channel.invokeMethod('getMacAddress');
+      print(result);
       return result;
     } on PlatformException catch (e) {
       print("Failed to get mac address: '${e.message}'.");

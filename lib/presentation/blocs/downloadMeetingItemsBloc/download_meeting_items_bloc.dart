@@ -71,8 +71,10 @@ class DownloadMeetingItemsBloc
           await addDepartments(data.departments);
           await addItems(data.items);
           await addItemsDetails(data.itemsDetails);
-
+          emit(NavigateToDownloadScreenToMantriInfoState());
         } else if (data.code == "101") {
+          emit(GetMeetingItemsHasNoData(data));
+        }else if (data.code == "102") {
           emit(GetMeetingItemsHasNoData(data));
         }
       },

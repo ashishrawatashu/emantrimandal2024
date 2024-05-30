@@ -58,6 +58,9 @@ dependencies:
   encrypt: ^5.0.3
   pip_view: ^0.9.7
   webview_flutter: ^3.0.1
+  window_manager: any
+  webview_windows: any
+  flutter_html: any
 
 dev_dependencies:
   flutter_test:

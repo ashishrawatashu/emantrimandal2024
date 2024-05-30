@@ -42,6 +42,10 @@ class _DownloadMeetingItemsScreenState extends State<DownloadMeetingItemsScreen>
             Future.delayed(const Duration(seconds: 2), () {
               Navigator.pushNamed(context, RoutePaths.mantriInfoScreen);
             });
+          }else if(state is GetMeetingItemsHasNoData){
+            Future.delayed(const Duration(seconds: 2), () {
+              Navigator.pushNamed(context, RoutePaths.errorScreen);
+            });
           }
         },
         builder: (context, state) {

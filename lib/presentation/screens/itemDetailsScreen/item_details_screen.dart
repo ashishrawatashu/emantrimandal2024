@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:emantrimandal/presentation/screens/itemDetailsScreen/pdf_view.dart';
 import 'package:emantrimandal/presentation/widgets/fullscreen_pdf_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import '../../../core/utils/singleton.dart';
 import '../../widgets/fullscreen_dialog.dart';
@@ -67,20 +68,31 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                     alignment: Alignment.topLeft,
                     color: Colors.amber.shade50,
                     padding: const EdgeInsets.all(16),
-                    child: Text(
-                      MySingleton()
-                          .getMeetingsItemsModel
-                          .itemsDetails![0]
-                          .itemsDetails
-                          .toString(),
-                      style: const TextStyle(
-                        fontSize: 18,
-                      ), /*MySingleton()
-                      .getMeetingsItemsModel
-                      .itemsDetails![0]
-                      .itemsDetails
-                      .toString()*/
+                    // child: Text(
+                    //   MySingleton()
+                    //       .getMeetingsItemsModel
+                    //       .itemsDetails![0]
+                    //       .itemsDetails
+                    //       .toString(),
+                    //   style: const TextStyle(
+                    //     fontSize: 18,
+                    //   ), /*MySingleton()
+                    //   .getMeetingsItemsModel
+                    //   .itemsDetails![0]
+                    //   .itemsDetails
+                    //   .toString()*/
+                    // ),
+
+                    child: SingleChildScrollView(
+                      child: Html(
+                        data: MySingleton()
+                              .getMeetingsItemsModel
+                              .itemsDetails![0]
+                              .itemsDetails
+                              .toString(),
+                      ),
                     ),
+
                   ),
                 ),
               ),

@@ -10,6 +10,14 @@ class ErrorScreen extends StatefulWidget {
 class _ErrorScreenState extends State<ErrorScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text("Emantri Mandal"),
+        backgroundColor: Colors.deepOrange,),
+      body: Center(
+        child: Text("No data found."),
+      ),
+    );
   }
 }

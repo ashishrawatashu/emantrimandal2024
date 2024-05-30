@@ -189,7 +189,6 @@ class _MantriDashboardScreenState extends State<MantriDashboardScreen> {
                       Text(
                         MySingleton().getMeetingsItemsModel.items![index].detailedSubject.toString(),
                         style: TextStyle(fontSize: 15),
-                        textAlign: TextAlign.center,
                       ),
                       Text(
                         "File No. "+MySingleton().getMeetingsItemsModel.items![index].fileNumber.toString(),

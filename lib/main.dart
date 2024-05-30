@@ -19,8 +19,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initDependencies();
   I.configureDependencies();
-
-
+  print(MacAddress.getMacAddressForWindows());
   runApp(const MyApp());
 
 }
