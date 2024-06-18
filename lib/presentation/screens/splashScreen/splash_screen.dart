@@ -31,7 +31,9 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocConsumer<SplashScreenBloc, SplashScreenState>(
         listener: (context,state){
           if(state is NavigateSplashToDownloadScreenState){
-            Navigator.pushNamed(context, RoutePaths.downloadMeetingItemsScreen);
+            Future.delayed(const Duration(seconds: 5), () {
+              Navigator.pushNamed(context, RoutePaths.downloadMeetingItemsScreen);
+            });
           }if(state is NavigateSplashToErrorScreenState){
             Navigator.pushNamed(context, RoutePaths.errorScreen);
           }
@@ -40,17 +42,18 @@ class _SplashScreenState extends State<SplashScreen> {
           return Container(
             child: Center(
               child: Container(
-                height: 200,
-                width: 200,
+                height: 300,
+                width: 300,
                 child: Center(
                   child: InkWell(
                     onTap: (){
                       Navigator.pushNamed(context, RoutePaths.downloadMeetingItemsScreen);
                     },
-                    child: Text(
-                      "Logo Space",
-                      style: TextStyle(fontSize: 22,color: Colors.deepOrange),
-                      textAlign: TextAlign.center,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        ImagesPath.eCabinetLogo,
+                      ),
                     ),
                   ),
                 ),

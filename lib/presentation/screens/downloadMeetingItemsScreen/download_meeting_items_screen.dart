@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emantrimandal/core/utils/singleton.dart';
 import 'package:emantrimandal/presentation/blocs/downloadMeetingItemsBloc/download_meeting_items_bloc.dart';
 
+import '../../../core/constants/images_path.dart';
 import '../../../main/navigation/route_paths.dart';
 
 class DownloadMeetingItemsScreen extends StatefulWidget {
@@ -30,6 +31,18 @@ class _DownloadMeetingItemsScreenState extends State<DownloadMeetingItemsScreen>
         title: Text("Downloading items"),
         backgroundColor: Colors.deepOrange,),
       body: downloadScreenBody(),
+      floatingActionButton: Container(
+        height: 80,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Image.asset(ImagesPath.eCabinetLogo,fit: BoxFit.fill,),
+            ),
+            Image.asset(ImagesPath.niclogo,fit: BoxFit.fill,)
+          ],
+        ),),
     );
 
 
@@ -39,9 +52,10 @@ class _DownloadMeetingItemsScreenState extends State<DownloadMeetingItemsScreen>
     return BlocConsumer<DownloadMeetingItemsBloc, DownloadMeetingItemsState>(
         listener: (context,state){
           if(state is NavigateToDownloadScreenToMantriInfoState){
-            Future.delayed(const Duration(seconds: 2), () {
-              Navigator.pushNamed(context, RoutePaths.mantriInfoScreen);
-            });
+            Navigator.pushNamed(context, RoutePaths.mantriInfoScreen);
+            // Future.delayed(const Duration(seconds: 2), () {
+            //
+            // });
           }else if(state is GetMeetingItemsHasNoData){
             Future.delayed(const Duration(seconds: 2), () {
               Navigator.pushNamed(context, RoutePaths.errorScreen);

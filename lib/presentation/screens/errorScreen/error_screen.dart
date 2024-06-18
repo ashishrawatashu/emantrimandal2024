@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/images_path.dart';
+import '../../../main/navigation/route_paths.dart';
+
 class ErrorScreen extends StatefulWidget {
   const ErrorScreen({super.key});
 
@@ -18,6 +21,18 @@ class _ErrorScreenState extends State<ErrorScreen> {
       body: Center(
         child: Text("No data found."),
       ),
-    );
+      floatingActionButton: Container(
+        height: 80,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Image.asset(ImagesPath.eCabinetLogo,fit: BoxFit.fill,),
+            ),
+            Image.asset(ImagesPath.niclogo,fit: BoxFit.fill,)
+          ],
+        ),),    );
+
   }
 }

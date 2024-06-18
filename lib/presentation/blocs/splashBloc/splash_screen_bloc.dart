@@ -62,7 +62,7 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
             MySingleton().TOKEN = data.tokenDetails![0].token.toString();
             this.add(GetDetailsFetchEvent());
             emit(GenerateTokenHasData(data));
-            emit(NavigateSplashToDownloadScreenState());
+            // emit(NavigateSplashToDownloadScreenState());
           } else if (data.code == "101") {
             emit(GenerateTokenHasNoData(data));
             emit(NavigateSplashToErrorScreenState());

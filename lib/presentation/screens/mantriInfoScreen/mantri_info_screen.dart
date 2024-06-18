@@ -182,18 +182,15 @@ class _MantriInfoScreenState extends State<MantriInfoScreen> {
       ),
       floatingActionButton: Container(
         height: 80,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Image.asset(ImagesPath.uklogo),
-          InkWell(
-            onTap: (){
-              Navigator.pushNamed(context, RoutePaths.mantriDashboardScreen);
-
-            },
-              child: Image.asset(ImagesPath.nicNewLogo))
-        ],
-      ),),
-    );
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Image.asset(ImagesPath.eCabinetLogo,fit: BoxFit.fill,),
+            ),
+            Image.asset(ImagesPath.niclogo,fit: BoxFit.fill,)
+          ],
+        ),),    );
   }
 }

@@ -57,21 +57,21 @@ class DownloadMeetingItemsBloc
 
 
     GetMeetingItemsParams getMeetingItemsParams = GetMeetingItemsParams(MAC: MySingleton().MAC, token: MySingleton().TOKEN);
-    final result =
-        await _getMeetingsItemsUseCase.execute(params: getMeetingItemsParams);
+    final result = await _getMeetingsItemsUseCase.execute(params: getMeetingItemsParams);
     result.fold(
       (error) {
         emit(GetMeetingItemsError(error));
       },
       (data) async {
         if (data.code == "100") {
+          emit(NavigateToDownloadScreenToMantriInfoState());
           MySingleton().getMeetingsItemsModel = data;
           // emit(GetMeetingItemsHasData(data));
           //adding departments
           await addDepartments(data.departments);
           await addItems(data.items);
           await addItemsDetails(data.itemsDetails);
-          emit(NavigateToDownloadScreenToMantriInfoState());
+
         } else if (data.code == "101") {
           emit(GetMeetingItemsHasNoData(data));
         }else if (data.code == "102") {
@@ -142,7 +142,7 @@ class DownloadMeetingItemsBloc
       },
       (data) async {
         print("addItemsDetailsEvent");
-        emit(NavigateToDownloadScreenToMantriInfoState());
+        // emit(NavigateToDownloadScreenToMantriInfoState());
       },
     );
   }

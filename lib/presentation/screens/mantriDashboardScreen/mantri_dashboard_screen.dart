@@ -7,6 +7,7 @@ import 'package:emantrimandal/core/utils/singleton.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pip_view/pip_view.dart';
 
+import '../../../core/constants/images_path.dart';
 import '../../../main/navigation/route_paths.dart';
 
 class MantriDashboardScreen extends StatefulWidget {
@@ -40,19 +41,31 @@ class _MantriDashboardScreenState extends State<MantriDashboardScreen> {
           backgroundColor: Colors.deepOrange,
           title: Text(" Meeting Details"),
           actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.videocam_rounded,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, RoutePaths.videoCall);
-                // do something
-              },
-            )
+            // IconButton(
+            //   icon: Icon(
+            //     Icons.videocam_rounded,
+            //     color: Colors.white,
+            //   ),
+            //   onPressed: () {
+            //     Navigator.pushReplacementNamed(context, RoutePaths.videoCall);
+            //     // do something
+            //   },
+            // )
           ],
         ),
-        body:  dashboardBody()
+        body:  dashboardBody(),
+      floatingActionButton: Container(
+        height: 80,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Image.asset(ImagesPath.eCabinetLogo,fit: BoxFit.fill,),
+            ),
+            Image.asset(ImagesPath.niclogo,fit: BoxFit.fill,)
+          ],
+        ),),
     );
 
   }
@@ -161,10 +174,11 @@ class _MantriDashboardScreenState extends State<MantriDashboardScreen> {
             Row(
               children: [
                 Container(
+                  width: 180,
                   padding: EdgeInsets.all(10),
                   child: Center(
                     child: Text(
-                      "मद क्रमांक \n" + i.toString() + "\n"+MySingleton().getMeetingsItemsModel.items![index].briefSubject.toString(),
+                      "मद क्रमांक \n" + i.toString() + "\n"+MySingleton().getMeetingsItemsModel.items![index].deptID.toString(),
                       style: TextStyle(fontSize: 18, color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
@@ -187,7 +201,7 @@ class _MantriDashboardScreenState extends State<MantriDashboardScreen> {
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        MySingleton().getMeetingsItemsModel.items![index].detailedSubject.toString(),
+                        MySingleton().getMeetingsItemsModel.items![index].briefSubject.toString(),
                         style: TextStyle(fontSize: 15),
                       ),
                       Text(
@@ -200,14 +214,6 @@ class _MantriDashboardScreenState extends State<MantriDashboardScreen> {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.forward,
-                color: Colors.deepOrange,
-                size: 30,
-              ),
-            )
           ],
         ),
       ),
