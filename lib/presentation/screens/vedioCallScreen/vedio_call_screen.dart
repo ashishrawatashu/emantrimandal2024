@@ -88,6 +88,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
@@ -162,8 +163,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                         setState(() {
                           minMax = true;
                         });
-                        PIPView.of(context)!
-                            .presentBelow(const MantriDashboardScreen());
+                        PIPView.of(context)!.presentBelow(MantriDashboardScreen());
                       },
                       child: Container(
                         height: 80,
@@ -223,6 +223,12 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
             ),
           );
         },
+      ),
+    );
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("VC Screen"),
       ),
     );
   }

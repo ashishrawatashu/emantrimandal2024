@@ -45,15 +45,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 300,
                 width: 300,
                 child: Center(
-                  child: InkWell(
-                    onTap: (){
-                      Navigator.pushNamed(context, RoutePaths.downloadMeetingItemsScreen);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.asset(
-                        ImagesPath.eCabinetLogo,
-                      ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      ImagesPath.eCabinetLogo,
                     ),
                   ),
                 ),

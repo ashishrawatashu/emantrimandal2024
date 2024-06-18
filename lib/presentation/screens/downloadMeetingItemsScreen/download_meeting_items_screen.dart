@@ -26,20 +26,13 @@ class _DownloadMeetingItemsScreenState extends State<DownloadMeetingItemsScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text("Downloading items"),
-        backgroundColor: Colors.deepOrange,),
       body: downloadScreenBody(),
       floatingActionButton: Container(
         height: 80,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Image.asset(ImagesPath.eCabinetLogo,fit: BoxFit.fill,),
-            ),
+            SizedBox(),
             Image.asset(ImagesPath.niclogo,fit: BoxFit.fill,)
           ],
         ),),
@@ -49,45 +42,104 @@ class _DownloadMeetingItemsScreenState extends State<DownloadMeetingItemsScreen>
   }
 
   Widget downloadScreenBody(){
-    return BlocConsumer<DownloadMeetingItemsBloc, DownloadMeetingItemsState>(
-        listener: (context,state){
-          if(state is NavigateToDownloadScreenToMantriInfoState){
-            Navigator.pushNamed(context, RoutePaths.mantriInfoScreen);
-            // Future.delayed(const Duration(seconds: 2), () {
-            //
-            // });
-          }else if(state is GetMeetingItemsHasNoData){
-            Future.delayed(const Duration(seconds: 2), () {
-              Navigator.pushNamed(context, RoutePaths.errorScreen);
-            });
-          }
-        },
-        builder: (context, state) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: (){
-                    Navigator.pushNamed(context, RoutePaths.mantriInfoScreen);
-                  },
-                  child: Card(
-                    child: Container(
-                      height: 150,
-                      width: 150,
-                      child: Padding(
-                        padding: const EdgeInsets.all(30.0),
-                        child: CircularProgressIndicator(
-                        ),
+    return Column(
+      children: [
+        Container(
+          height: 80,
+
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5), // Adjusts the radius of corners
+            border: Border.all(
+              color: Colors.deepOrange, // You can set border color here
+              width: 2.0,          // Border width
+            ),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Image.asset(ImagesPath.eCabinetLogo,height: 50,),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 7,
+                child: Container(
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: Colors.deepOrange,
+                    borderRadius: BorderRadius.circular(5),
+                    // Adjusts the radius of corners
+                    border: Border.all(
+                      color: Colors.deepOrange, // You can set border color here
+                      width: 2.0,          // Border width
+                    ),
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 4,horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5), // Adjusts the radius of corners
+                      border: Border.all(
+                        color: Colors.white, // You can set border color here
+                        width: 2.0,          // Border width
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "बैंठक का डाटा डाउनलोड हो रहा है",
+                        style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500,color: Colors.deepOrange),
                       ),
                     ),
                   ),
                 ),
-                Text("Please wait....")
-              ],
-            )
-          );
-        });
+              )
+            ],
+          ),
+        ),
+
+        Expanded(
+          child: BlocConsumer<DownloadMeetingItemsBloc, DownloadMeetingItemsState>(
+              listener: (context,state){
+                if(state is NavigateToDownloadScreenToMantriInfoState){
+                  Navigator.pushNamed(context, RoutePaths.mantriInfoScreen);
+                  // Future.delayed(const Duration(seconds: 2), () {
+                  //
+                  // });
+                }else if(state is GetMeetingItemsHasNoData){
+                  Future.delayed(const Duration(seconds: 2), () {
+                    Navigator.pushNamed(context, RoutePaths.errorScreen);
+                  });
+                }
+              },
+              builder: (context, state) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Card(
+                        child: Container(
+                          height: 150,
+                          width: 150,
+                          child: Padding(
+                            padding: const EdgeInsets.all(30.0),
+                            child: CircularProgressIndicator(
+                            ),
+                          ),
+                        ),
+                      ),
+                      Text("Please wait....")
+                    ],
+                  )
+                );
+              }),
+        ),
+      ],
+    );
 
   }
 }

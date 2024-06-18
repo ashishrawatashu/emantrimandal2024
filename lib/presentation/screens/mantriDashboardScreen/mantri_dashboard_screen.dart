@@ -36,34 +36,55 @@ class _MantriDashboardScreenState extends State<MantriDashboardScreen> {
     //   },
     // );
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.deepOrange,
-          title: Text(" Meeting Details"),
-          actions: <Widget>[
-            // IconButton(
-            //   icon: Icon(
-            //     Icons.videocam_rounded,
-            //     color: Colors.white,
-            //   ),
-            //   onPressed: () {
-            //     Navigator.pushReplacementNamed(context, RoutePaths.videoCall);
-            //     // do something
-            //   },
-            // )
-          ],
-        ),
+        // appBar: AppBar(
+        //   automaticallyImplyLeading: false,
+        //   backgroundColor: Colors.deepOrange,
+        //   title: Text("बैंठक का विवरण "),
+        //   actions: <Widget>[
+        //     // IconButton(
+        //     //   icon: Icon(
+        //     //     Icons.videocam_rounded,
+        //     //     color: Colors.white,
+        //     //   ),
+        //     //   onPressed: () {
+        //     //     Navigator.pushReplacementNamed(context, RoutePaths.videoCall);
+        //     //     // do something
+        //     //   },
+        //     // )
+        //   ],
+        // ),
         body:  dashboardBody(),
       floatingActionButton: Container(
-        height: 80,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Image.asset(ImagesPath.eCabinetLogo,fit: BoxFit.fill,),
+            SizedBox(),
+            InkWell(
+              onTap: (){
+                Navigator.pushNamed(context, RoutePaths.videoCall);
+              },
+              child: Container(
+                height: 50,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.deepOrange,
+                  borderRadius: BorderRadius.circular(100),
+                  // Adjusts the radius of corners
+                  border: Border.all(
+                    color: Colors.deepOrange, // You can set border color here
+                    width: 2.0,          // Border width
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Icon(Icons.video_call,color: Colors.white,),
+                    Text("VC से जुड़े ",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: Colors.white),),
+                  ],
+                ),
+              ),
             ),
-            Image.asset(ImagesPath.niclogo,fit: BoxFit.fill,)
+            Image.asset(ImagesPath.niclogo,fit: BoxFit.contain,)
           ],
         ),),
     );
@@ -133,7 +154,6 @@ class _MantriDashboardScreenState extends State<MantriDashboardScreen> {
   }
 
   pendingItemsForDiscussion() {
-
     return Column(
       children: [
         Expanded(
@@ -157,7 +177,8 @@ class _MantriDashboardScreenState extends State<MantriDashboardScreen> {
     return GestureDetector(
       onTap: () {
         print("hi");
-        Navigator.of(context).push(MaterialPageRoute(builder: (_)=>ItemDetailsScreen()));
+        showTDialog();
+        // Navigator.of(context).push(MaterialPageRoute(builder: (_)=>ItemDetailsScreen()));
         // Navigator.pushNamed(context, RoutePaths.itemDetailsScreen);
       },
       child: Container(
@@ -221,23 +242,110 @@ class _MantriDashboardScreenState extends State<MantriDashboardScreen> {
   }
 
   dashboardBody() {
-    return BlocConsumer<MantriDashboardBloc, MantriDashboardState>(
-        listener: (context,state){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          height: 80,
 
-        },
-        builder: (context, state) {
-          return Container(
-            child: Row(
-              children: [
-                Expanded(
-                    flex: 3,
-                    child: Container(child: dashBoardLeftListLayout(),)),
-                Expanded(
-                    flex:7,
-                    child: Container(child: pendingItemsForDiscussion(),)),
-              ],
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5), // Adjusts the radius of corners
+            border: Border.all(
+              color: Colors.deepOrange, // You can set border color here
+              width: 2.0,          // Border width
             ),
-          );
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Image.asset(ImagesPath.eCabinetLogo,height: 50,),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 7,
+                child: Container(
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: Colors.deepOrange,
+                    borderRadius: BorderRadius.circular(5),
+                    // Adjusts the radius of corners
+                    border: Border.all(
+                      color: Colors.deepOrange, // You can set border color here
+                      width: 2.0,          // Border width
+                    ),
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 4,horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5), // Adjusts the radius of corners
+                      border: Border.all(
+                        color: Colors.white, // You can set border color here
+                        width: 2.0,          // Border width
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "बैंठक का विवरण ",
+                        style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500,color: Colors.deepOrange),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        Expanded(
+          child: BlocConsumer<MantriDashboardBloc, MantriDashboardState>(
+              listener: (context,state){
+          
+              },
+              builder: (context, state) {
+                return Container(
+                  child: Row(
+                    children: [
+                      Expanded(
+                          flex: 3,
+                          child: Row(
+                            children: [
+                              Expanded(child: Container(child: dashBoardLeftListLayout(),)),
+                              Container(
+                                margin: EdgeInsets.only(top: 10),
+                                width: 1,color: Colors.grey,)
+                            ],
+                          )),
+                      Expanded(
+                          flex:7,
+                          child: Container(child: pendingItemsForDiscussion(),)),
+                    ],
+                  ),
+                );
+              }),
+        ),
+      ],
+    );
+  }
+
+  showTDialog(){
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel: MaterialLocalizations.of(context)
+            .modalBarrierDismissLabel,
+        barrierColor: Colors.black45,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext,
+            Animation animation,
+            Animation secondaryAnimation) {
+          return ItemDetailsScreen();
         });
   }
+
 }
