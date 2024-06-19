@@ -75,7 +75,9 @@ class DownloadMeetingItemsBloc
         } else if (data.code == "101") {
           emit(GetMeetingItemsHasNoData(data));
         }else if (data.code == "102") {
-          emit(GetMeetingItemsHasNoData(data));
+          MySingleton().ERROR_MSG = "खेद है, आज  कोई  बैठक  प्रस्तावित नहीं हैं |";
+          emit(NavigateToDownloadScreenToMantriInfoState());
+          // emit(GetMeetingItemsHasNoData(data));
         }
       },
     );

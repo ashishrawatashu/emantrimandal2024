@@ -63,7 +63,8 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
             this.add(GetDetailsFetchEvent());
             emit(GenerateTokenHasData(data));
             // emit(NavigateSplashToDownloadScreenState());
-          } else if (data.code == "101") {
+          } else  {
+            MySingleton().ERROR_MSG = "यह टैब इस प्रणाली मे पंजीकृत नहीं है,\nकृपया मंत्रिपरिषद विभाग से संपर्क करे |";
             emit(GenerateTokenHasNoData(data));
             emit(NavigateSplashToErrorScreenState());
           }

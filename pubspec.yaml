@@ -62,7 +62,9 @@ dependencies:
   webview_windows: any
   flutter_html: any
 
+
 dev_dependencies:
+  flutter_launcher_icons:
   flutter_test:
     sdk: flutter
 
@@ -82,6 +84,11 @@ dev_dependencies:
   # Make Pages Responsive To All Devices
   flutter_screenutil: ^5.9.0
 
+flutter_launcher_icons:
+  windows:
+    generate: true
+    image_path: "assets/windows/mpLogo.png"
+    icon_size: 48 # min:48, max:256, default: 48
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

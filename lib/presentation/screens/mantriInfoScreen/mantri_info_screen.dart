@@ -24,7 +24,11 @@ class _MantriInfoScreenState extends State<MantriInfoScreen> {
     // TODO: implement initState
     super.initState();
     Future.delayed(const Duration(seconds: 13), () {
-      Navigator.pushNamed(context, RoutePaths.mantriDashboardScreen);
+      if(MySingleton().getMeetingsItemsModel.code=="100"){
+        Navigator.pushNamed(context, RoutePaths.mantriDashboardScreen);
+      }else {
+        Navigator.pushNamed(context, RoutePaths.errorScreen);
+      }
     });
   }
 
@@ -41,7 +45,6 @@ class _MantriInfoScreenState extends State<MantriInfoScreen> {
         children: [
           Container(
             height: 80,
-
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5), // Adjusts the radius of corners
               border: Border.all(
@@ -136,7 +139,7 @@ class _MantriInfoScreenState extends State<MantriInfoScreen> {
                         animatedTexts: [
                           TypewriterAnimatedText(
                             speed: const Duration(milliseconds: 100),
-                            "प्रणाली का पूर्ण स्वामित्व मंत्रिपरिषद विभाग , उत्तराखण्ड के पास निहित है | \nसॉफ्टवेयर का विकास राष्ट्रीय सूचना विज्ञान केंद्र(NIC) द्वारा किया गया है | ",textStyle: TextStyle(fontSize: 30,color: Colors.grey),),
+                            "प्रणाली का पूर्ण स्वामित्व मंत्रिपरिषद विभाग, मध्य प्रदेश के पास निहित है | \nसॉफ्टवेयर का विकास राष्ट्रीय सूचना विज्ञान केंद्र(NIC) द्वारा किया गया है | ",textStyle: TextStyle(fontSize: 30,color: Colors.grey),),
                         ],
                         isRepeatingAnimation: true,
                         totalRepeatCount: 1,

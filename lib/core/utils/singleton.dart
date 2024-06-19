@@ -14,6 +14,7 @@ class MySingleton{
   String TOKEN = "";
   String MAC = "00:1A:3B:3C:4D:5E";
   String MACKEY = "Cdaytest@123";
+  String ERROR_MSG = "";
 
 
   GetDetailsModel getDetailsModel = GetDetailsModel();

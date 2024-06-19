@@ -1,6 +1,7 @@
 import 'package:emantrimandal/core/constants/images_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/utils/singleton.dart';
 import '../../../main/navigation/route_paths.dart';
 import '../../blocs/splashBloc/splash_screen_bloc.dart';
 
@@ -22,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: Colors.white,
         body: splashBody(),
     );
   }
@@ -39,23 +40,25 @@ class _SplashScreenState extends State<SplashScreen> {
           }
         },
         builder: (context, state) {
-          return Container(
-            child: Center(
-              child: Container(
-                height: 300,
-                width: 300,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      ImagesPath.eCabinetLogo,
-                    ),
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Image.asset(
+                    ImagesPath.eCabinetLogo,
                   ),
                 ),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white),
-              ),
+                Container(
+                  margin: EdgeInsets.only(top: 5,bottom: 5),
+                  width: 600,
+                  height: 1,
+                  color: Colors.deepOrange,
+                ),
+                Text("ई-मंत्रिमण्डल प्रणाली राष्ट्रीय सूचना विज्ञान केंद्र(NIC) के द्वारा, राज्य सरकार के सहयोग से,\n अभिकल्पित एवं विकसित किया गया है |",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.deepOrange,),textAlign: TextAlign.center,),
+
+              ],
             ),
           );
         });

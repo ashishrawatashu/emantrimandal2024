@@ -8,6 +8,7 @@ class ImagesPath{
   static String eCabinetLogo = Helper.getImagePath("eCabinetLogo.png");
   static String noteBook = Helper.getImagePath("notebook.png");
   static String userImg = Helper.getImagePath("user_img.png");
+  static String namaste = Helper.getImagePath("namaste.png");
   static String niclogo = Helper.getImagePath("niclogo.jpeg");
 
 }
