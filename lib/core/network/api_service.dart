@@ -18,6 +18,7 @@ import '../../domain/entity/remote/updatedMeetingItemsEntity/updated_meetings_en
 part 'api_service.g.dart';
 
 //flutter pub run build_runner build
+
 @RestApi()
 abstract class ApiService {
   factory ApiService({
@@ -55,6 +56,5 @@ abstract class ApiService {
   @FormUrlEncoded()
   @POST("/UpdatedMeetingItems")
   Future<HttpResponse<UpdatedMeetingsEntity>> updatedMeetingItems(@Body()UpdatedMeetingItemsParams updatedMeetingItemsParams);
-
 
 }

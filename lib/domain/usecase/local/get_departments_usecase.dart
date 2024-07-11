@@ -13,7 +13,6 @@ class GetDepartmentUseCase extends BaseLocalUseCase<List<DepartmentsModel>, Defa
 
   @override
   Future<Either<Failure, List<DepartmentsModel>>> call(DefaultParams param) async {
-
     return departmentsRepository.getDepartments();
   }
 

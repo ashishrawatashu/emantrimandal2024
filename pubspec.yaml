@@ -60,7 +60,7 @@ dependencies:
   webview_flutter: ^3.0.1
   window_manager: any
   webview_windows: any
-  flutter_html: any
+  flutter_widget_from_html_core: ^0.15.1
 
 
 dev_dependencies:
