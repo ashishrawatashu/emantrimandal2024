@@ -8,8 +8,9 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart'; // Assuming you're
 import '../../../core/utils/singleton.dart';
 
 class ItemDetailsScreen extends StatefulWidget {
+  final int itemIndex;
 
-  const ItemDetailsScreen({super.key});
+  const ItemDetailsScreen({super.key, required this.itemIndex});
 
   @override
   State<ItemDetailsScreen> createState() => _ItemDetailsScreenState();
@@ -18,7 +19,6 @@ class ItemDetailsScreen extends StatefulWidget {
 class _ItemDetailsScreenState extends State<ItemDetailsScreen>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
-  late int index;
   @override
   void initState() {
     super.initState();
@@ -27,16 +27,14 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
-    index = ModalRoute.of(context)!.settings.arguments as int;
-
-
+    // index = ModalRoute.of(context)!.settings.arguments as int;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepOrange,
         title: Text("मद क्रमांक " +
             MySingleton()
                 .getMeetingsItemsModel
-                .itemsDetails![index]
+                .itemsDetails![widget.itemIndex]
                 .itemId
                 .toString() +
             " का विवरण"),
@@ -69,7 +67,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                           child: SingleChildScrollView(
                             child: HtmlWidget(parse(MySingleton()
                                 .getMeetingsItemsModel
-                                .itemsDetails![index]
+                                .itemsDetails![widget.itemIndex]
                                 .itemsDetails
                                 .toString())
                                 .documentElement!
@@ -183,7 +181,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                           onTap: () {
                                             showPdfDialog(MySingleton()
                                                 .getMeetingsItemsModel
-                                                .itemsDetails![index]
+                                                .itemsDetails![widget.itemIndex]
                                                 .fileApprovedNote
                                                 .toString());
                                           },
@@ -194,7 +192,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                               base64Decode(MySingleton()
                                                   .getMeetingsItemsModel
                                                   .itemsDetails![
-                                              index]
+                                              widget.itemIndex]
                                                   .fileApprovedNote
                                                   .toString()),
                                             ),
@@ -204,7 +202,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                           onTap: () {
                                             showPdfDialog(MySingleton()
                                                 .getMeetingsItemsModel
-                                                .itemsDetails![index]
+                                                .itemsDetails![widget.itemIndex]
                                                 .fileEnclosure
                                                 .toString());
                                           },
@@ -215,7 +213,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                                               base64Decode(MySingleton()
                                                   .getMeetingsItemsModel
                                                   .itemsDetails![
-                                              index]
+                                              widget.itemIndex]
                                                   .fileEnclosure
                                                   .toString()),
                                             ),
@@ -262,7 +260,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
                   child: HtmlWidget(
                     parse(MySingleton()
                         .getMeetingsItemsModel
-                        .itemsDetails![index]
+                        .itemsDetails![widget.itemIndex]
                         .itemsDetails
                         .toString())
                         .documentElement!

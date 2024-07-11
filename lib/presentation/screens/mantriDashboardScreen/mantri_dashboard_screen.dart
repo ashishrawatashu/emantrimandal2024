@@ -64,7 +64,7 @@ class _MantriDashboardScreenState extends State<MantriDashboardScreen> {
                     Container(
                       padding: EdgeInsets.all(8),
                       width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                      margin: EdgeInsets.only(top: 10, left: 10, right: 10,bottom: 10),
                       decoration: BoxDecoration(
                         color: departmentId == "All"
                             ? Colors.deepOrange
@@ -216,8 +216,8 @@ class _MantriDashboardScreenState extends State<MantriDashboardScreen> {
     var i = index + 1;
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, RoutePaths.itemDetailsScreen,arguments: index,);
-        // showTDialog(index);
+        // Navigator.pushNamed(context, RoutePaths.itemDetailsScreen,arguments: index,);
+        showTDialog(index);
       },
       child: Container(
         height: 100,
@@ -405,7 +405,7 @@ class _MantriDashboardScreenState extends State<MantriDashboardScreen> {
       transitionDuration: const Duration(milliseconds: 200),
       pageBuilder: (BuildContext buildContext, Animation animation,
           Animation secondaryAnimation) {
-        return ItemDetailsScreen();
+        return ItemDetailsScreen(itemIndex: index,);
       },
     );
   }
