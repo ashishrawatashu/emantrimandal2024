@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocConsumer<SplashScreenBloc, SplashScreenState>(
         listener: (context,state){
           if(state is NavigateSplashToDownloadScreenState){
-            Future.delayed(const Duration(seconds: 5), () {
+            Future.delayed(const Duration(seconds: 3), () {
               Navigator.pushNamed(context, RoutePaths.downloadMeetingItemsScreen);
             });
           }if(state is NavigateSplashToErrorScreenState){

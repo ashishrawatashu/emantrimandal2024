@@ -55,14 +55,14 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
       final result = await _generateTokenUseCase.execute(params: generateTokenParams);
       result.fold(
         (error) {
-          emit(GenerateTokenError(error));
+          MySingleton().ERROR_MSG = "ख़ॆद है | तकनीकी ञुटि आ जाने के कारण कार्य पूरा नही हो पाया,\nकृपया मंत्रिपरिषद विभाग से संपर्क करे |";
+          emit(NavigateSplashToErrorScreenState());
         },
         (data) {
           if (data.code == "100") {
             MySingleton().TOKEN = data.tokenDetails![0].token.toString();
             this.add(GetDetailsFetchEvent());
             emit(GenerateTokenHasData(data));
-            // emit(NavigateSplashToDownloadScreenState());
           } else  {
             MySingleton().ERROR_MSG = "यह टैब इस प्रणाली मे पंजीकृत नहीं है,\nकृपया मंत्रिपरिषद विभाग से संपर्क करे |";
             emit(GenerateTokenHasNoData(data));
@@ -70,7 +70,9 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
           }
         },
       );
-    } on PlatformException {
+    } catch(e) {
+      MySingleton().ERROR_MSG = "यह टैब इस प्रणाली मे पंजीकृत नहीं है,\nकृपया मंत्रिपरिषद विभाग से संपर्क करे |";
+      emit(NavigateSplashToErrorScreenState());
       // macAddress = 'Failed to get mac address.';
     }
   }

@@ -23,7 +23,7 @@ class MantriDashboardBloc extends Bloc<MantriDashboardEvent, MantriDashboardStat
       emit(DepartmentLoadingErrorState());
     },(data) {
       emit(GetDepartmentsSuccessState(data));
-    },
+      },
     );
   }
 
