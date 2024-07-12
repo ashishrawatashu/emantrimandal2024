@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:emantrimandal/core/utils/singleton.dart';
 import 'package:emantrimandal/data/model/generateToken/generate_token_model.dart';
 import 'package:emantrimandal/data/model/getDetailsModel/meetings_details_model.dart';
@@ -10,6 +11,7 @@ import 'package:emantrimandal/domain/entity/remote/request_params/get_details_pa
 import 'package:meta/meta.dart';
 import '../../../core/error/failure.dart';
 import '../../../core/error/network_error.dart';
+import '../../../core/utils/get_mac_address.dart';
 import '../../../data/model/getDetailsModel/get_details_model.dart';
 import '../../../domain/usecase/base/local_base_usecase.dart';
 import '../../../domain/usecase/remote/get_details_usecase.dart';
@@ -36,14 +38,17 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
   }
 
   FutureOr<void> generateTokenDataEvent(GenerateTokenDataEvent event, Emitter<SplashScreenState> emit) async {
-    emit(GenerateTokenLoading());
-    // final _getMacAddressPlugin = GetMacAddress();
-    // String macAddress;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
+
     try {
-      // macAddress = await _getMacAddressPlugin.getMacAddress() ?? 'Unknown mac address';
-      // MySingleton().MAC = macAddress;
+      // if (Platform.isAndroid) {
+      //   MacAddress.getMacAddress();
+      //   print(MySingleton().MAC+"hakshghjkags");
+      // } else if (Platform.isWindows) {
+      //   MySingleton().MAC = await MacAddress.getMacAddressForWindows();
+      // }
+
+      emit(GenerateTokenLoading());
+
       GenerateTokenParams generateTokenParams = GenerateTokenParams(
           MACUID: MySingleton().MAC,
           MACKey: MySingleton().MACKEY,

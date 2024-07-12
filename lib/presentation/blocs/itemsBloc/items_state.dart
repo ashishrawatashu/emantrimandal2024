@@ -19,6 +19,7 @@ class ItemsLoadingState extends ItemsState {}
 class ItemsLoadingErrorState extends ItemsState {}
 
 
+
 ///get Items by dept id
 class GetItemsByDeptIdSuccessState extends ItemsState {
   final List<ItemsModel> itemsModelList;

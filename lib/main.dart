@@ -14,12 +14,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/di/inject.dart';
+import 'core/utils/singleton.dart';
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await initDependencies();
   I.configureDependencies();
-  print(MacAddress.getMacAddressForWindows().toString()+"MY MAC ADDRESS ");
+  // if (Platform.isAndroid) {
+  //   MacAddress.getMacAddress();
+  // } else if (Platform.isWindows) {
+  //   MySingleton().MAC = await MacAddress.getMacAddressForWindows();
+  // }
   runApp(const MyApp());
 
 }

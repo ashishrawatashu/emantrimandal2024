@@ -15,16 +15,14 @@ class MantriInfoScreen extends StatefulWidget {
 
 class _MantriInfoScreenState extends State<MantriInfoScreen> {
 
-
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 13), () {
-      if(MySingleton().getMeetingsItemsModel.code=="100"){
+    Future.delayed(const Duration(seconds: 8), () {
+      if(MySingleton().getDetailsModel.code=="100"){
         Navigator.pushNamed(context, RoutePaths.mantriDashboardScreen);
       }else {
-        // Navigator.pushNamed(context, RoutePaths.mantriDashboardScreen);
-        Navigator.pushNamed(context, RoutePaths.errorScreen,arguments: "String");
+        Navigator.pushNamed(context, RoutePaths.errorScreen);
       }
     });
   }
@@ -51,7 +49,8 @@ class _MantriInfoScreenState extends State<MantriInfoScreen> {
           ),
           Image.asset(ImagesPath.niclogo,fit: BoxFit.contain,)
         ],
-      ),    );
+      ),
+    );
   }
 
 
@@ -63,7 +62,7 @@ class _MantriInfoScreenState extends State<MantriInfoScreen> {
           children: [
             ClipOval(
               child: SizedBox.fromSize(
-                size: Size.fromRadius(120),
+                size: Size.fromRadius(150),
                 child: Image.memory(
                   base64Decode(MySingleton().getDetailsModel.meetingDetail![0].imageMinister.toString()),
                   fit: BoxFit.cover,
@@ -82,8 +81,8 @@ class _MantriInfoScreenState extends State<MantriInfoScreen> {
                       textAlign: TextAlign.center,
                       MySingleton().getDetailsModel.meetingDetail![0].ministerNameHindi.toString() + "," +
                           MySingleton().getDetailsModel.meetingDetail![0].minDesignameForProceedings.toString()+"\n"
-                          "आपका स्वागत है",
-                      textStyle: TextStyle(fontSize: 30, color: Colors.deepOrange),
+                          "आपका स्वागत है |",
+                      textStyle: TextStyle(fontSize: 40, color: Colors.deepOrange),
                     ),
                   ],
                   isRepeatingAnimation: true,
@@ -91,18 +90,18 @@ class _MantriInfoScreenState extends State<MantriInfoScreen> {
                 ),
               ],
             ),
-            AnimatedTextKit(
-              animatedTexts: [
-                TypewriterAnimatedText(
-                  speed: Duration(milliseconds: 100),
-                  textAlign: TextAlign.center,
-                  "ई-मंत्रिमण्डल प्रणाली राष्ट्रीय सूचना विज्ञान केंद्र(NIC) के द्वारा, राज्य सरकार के सहयोग से,\n अभिकल्पित एवं विकसित किया गया है |",
-                  textStyle: TextStyle(fontSize: 15, color: Colors.grey,),
-                ),
-              ],
-              isRepeatingAnimation: true,
-              totalRepeatCount: 1,
-            ),
+            // AnimatedTextKit(
+            //   animatedTexts: [
+            //     TypewriterAnimatedText(
+            //       speed: Duration(milliseconds: 100),
+            //       textAlign: TextAlign.center,
+            //       "ई-मंत्रिमण्डल प्रणाली राष्ट्रीय सूचना विज्ञान केंद्र(NIC) के द्वारा, राज्य सरकार के सहयोग से,\n अभिकल्पित एवं विकसित किया गया है |",
+            //       textStyle: TextStyle(fontSize: 15, color: Colors.grey,),
+            //     ),
+            //   ],
+            //   isRepeatingAnimation: true,
+            //   totalRepeatCount: 1,
+            // ),
           ],
         ),
       ),

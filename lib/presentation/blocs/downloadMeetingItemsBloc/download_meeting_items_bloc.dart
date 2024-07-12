@@ -67,12 +67,10 @@ class DownloadMeetingItemsBloc
             // Handle valid response
             switch (data.code) {
               case "100":
-                // MySingleton().getMeetingsItemsModel = data;
+                emit(NavigateToDownloadScreenToMantriInfoState());
                 await addDepartments(data.departments);
                 await addItems(data.items);
                 await addItemsDetails(data.itemsDetails);
-                emit(NavigateToDownloadScreenToMantriInfoState());
-
                 break;
               case "101":
                 MySingleton().ERROR_MSG = MySingleton().noMeetingMsg;
@@ -100,10 +98,7 @@ class DownloadMeetingItemsBloc
   }
 
   bool isValidResponse(GetMeetingsItemsModel data) {
-    return data.code != null &&
-        (data.departments != null ||
-            data.items != null ||
-            data.itemsDetails != null);
+    return data.code != null && (data.departments != null || data.items != null || data.itemsDetails != null);
   }
 
   FutureOr<void> getDataInBackground(GetMeetingItemsBackgroundEvent event,

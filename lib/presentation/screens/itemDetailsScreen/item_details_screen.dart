@@ -11,8 +11,9 @@ import '../../../core/utils/singleton.dart';
 
 class ItemDetailsScreen extends StatefulWidget {
   final String itemId;
+  final String deptName;
 
-  const ItemDetailsScreen({super.key, required this.itemId});
+  const ItemDetailsScreen({super.key, required this.itemId, required this.deptName});
 
   @override
   State<ItemDetailsScreen> createState() => _ItemDetailsScreenState();
@@ -32,9 +33,6 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
-
-
-
     return BlocConsumer<ItemDetailsBloc, ItemDetailsState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -44,10 +42,10 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen>
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.deepOrange,
-              title: Text("मद क्रमांक " +
-                  state.itemDetails.itemId
-                      .toString() +
-                  " का विवरण"),
+              title: Text(
+                "मद क्रमांक " + state.itemDetails.itemId.toString() + " (" + widget.deptName.replaceAll("\n","").trim()+") का विवरण",
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             body: Container(
               child: Row(

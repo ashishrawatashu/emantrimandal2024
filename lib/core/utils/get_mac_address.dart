@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:emantrimandal/core/utils/singleton.dart';
 import 'package:flutter/services.dart';
 
 class MacAddress {
@@ -7,11 +8,10 @@ class MacAddress {
 
   static Future<String> getMacAddress() async {
     try {
-      // _channel.invokeMethod('getMacAddress');
-      print(await _channel.invokeMethod("getMacAddress"));
-      Future.delayed(Duration(seconds: 2), () async {
+      Future.delayed(Duration(seconds: 1), () async {
         _channel.setMethodCallHandler(_handleMethod);
          print("MAC ADDRESS=====" + macAddress);
+         MySingleton().MAC = macAddress;
       });
       return macAddress;
     } on PlatformException catch (e) {
