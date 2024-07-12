@@ -31,11 +31,9 @@ class ItemsDetailsLocalDsImpl implements ItemsDetailsLocalDataSource {
             fileApprovedNote: itemsModel.fileApprovedNote,
             fileEnclosure: itemsModel.fileEnclosure);
 
-        print('DATA IS ADDED');
         await itemsDetailsBox.add(convertedTask);
         return Future.value(unit);
       } else {
-        print('Duplicate data detected');
         return Future.value(null);
       }
     } catch (_) {
@@ -44,9 +42,15 @@ class ItemsDetailsLocalDsImpl implements ItemsDetailsLocalDataSource {
   }
 
   @override
-  Future<Unit> deleteAllItemsDetails() {
-    // TODO: implement deleteAllItemsDetails
-    throw UnimplementedError();
+  Future<Unit> deleteAllItemsDetails() async {
+    try {
+      final itemsDetailsBox = Hive.box<ItemsDetailsHiveEntity>(_kItemsDetailsBox);
+      await itemsDetailsBox.clear(); // Clear all items in the box
+      print('All item details deleted');
+      return Future.value(unit);
+    } catch (_) {
+      throw ConnectionException();
+    }
   }
 
   @override

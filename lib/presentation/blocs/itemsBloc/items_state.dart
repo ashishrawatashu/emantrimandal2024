@@ -9,7 +9,8 @@ class ItemsInitial extends ItemsState {}
 ///get Items
 class GetItemsSuccessState extends ItemsState {
   final List<ItemsModel> itemsModelList;
-  GetItemsSuccessState(this.itemsModelList);
+  final int totalItemsCount;
+  GetItemsSuccessState(this.itemsModelList,this.totalItemsCount);
 }
 
 class ItemsLoadingState extends ItemsState {}

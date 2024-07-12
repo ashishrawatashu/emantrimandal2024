@@ -10,12 +10,8 @@ import '../base/local_base_usecase.dart';
 class GetMeetingDetailsUseCase extends  BaseLocalUseCase<List<MeetingDetailModel>, DefaultParams> {
   final MeetingDetailsLocalRepository getMeetingDetailsRepository;
   GetMeetingDetailsUseCase({required this.getMeetingDetailsRepository});
-
   @override
   Future<Either<Failure, List<MeetingDetailModel>>> call(DefaultParams param) async {
     return await getMeetingDetailsRepository.getMeetingDetails();
   }
-
-
-
 }

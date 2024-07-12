@@ -28,7 +28,7 @@ class ItemsRepositoryImpl implements ItemsLocalRepository {
   @override
   Future<Either<Failure, Unit>> deleteAllItems() async {
     try{
-      final response = await itemsLocalDataSource.deleteAllMeeting();
+      final response = await itemsLocalDataSource.deleteAllItems();
       return Right(response);
     } on NoDataException {
       return Left(NoDataFailure());

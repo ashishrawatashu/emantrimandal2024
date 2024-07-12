@@ -31,11 +31,9 @@ class ItemsLocalDsImpl implements ItemsLocalDataSource {
             detailedSubject: itemsModel.detailedSubject,
             fileNumber: itemsModel.fileNumber);
 
-        print('DATA IS ADDED');
         await itemsBox.add(convertedTask);
         return Future.value(unit);
       } else {
-        print('Duplicate data detected');
         return Future.value(null);
       }
     } catch (_) {
@@ -44,9 +42,15 @@ class ItemsLocalDsImpl implements ItemsLocalDataSource {
   }
 
   @override
-  Future<Unit> deleteAllMeeting() {
-    // TODO: implement deleteAllMeeting
-    throw UnimplementedError();
+  Future<Unit> deleteAllItems() async {
+    try {
+      final itemsBox = Hive.box<ItemsHiveEntity>(_kItemsBox);
+      await itemsBox.clear(); // Clear all items in the box
+      print('All meetings deleted');
+      return Future.value(unit);
+    } catch (_) {
+      throw ConnectionException();
+    }
   }
 
   @override

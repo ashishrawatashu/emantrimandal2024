@@ -31,11 +31,9 @@ class DepartmentsLocalDsImpl implements DepartmentsLocalDataSource {
             minister: departmentsList.minister,
             noOfItems: departmentsList.noOfItems);
 
-        print('DATA IS ADDED');
         await departmentBox.add(convertedTask);
         return Future.value(unit);
       } else {
-        print('Duplicate data detected');
         return Future.value(null);
       }
     } catch (_) {
@@ -44,9 +42,15 @@ class DepartmentsLocalDsImpl implements DepartmentsLocalDataSource {
   }
 
   @override
-  Future<Unit> deleteAllDepartments() {
-    // TODO: implement deleteAllDepartments
-    throw UnimplementedError();
+  Future<Unit> deleteAllDepartments() async {
+    try {
+      final departmentBox = Hive.box<DepartmentsHiveEntity>(_kDepartments);
+      await departmentBox.clear(); // Clear all items in the box
+      print('All departments deleted');
+      return Future.value(unit);
+    } catch (_) {
+      throw ConnectionException();
+    }
   }
 
   @override

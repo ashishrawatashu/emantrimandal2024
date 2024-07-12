@@ -38,12 +38,9 @@ class GetMeetingItemsHasData extends DownloadMeetingItemsState {
 }
 
 class GetMeetingItemsHasNoData extends DownloadMeetingItemsState {
-  final GetMeetingsItemsModel result;
-
-  GetMeetingItemsHasNoData(this.result);
 
   @override
-  List<Object?> get props => [result];
+  List<Object?> get props => [];
 }
 
 //get meeting

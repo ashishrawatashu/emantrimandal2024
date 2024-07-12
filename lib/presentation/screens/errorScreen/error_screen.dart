@@ -40,7 +40,8 @@ class _ErrorScreenState extends State<ErrorScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(),
-            Image.asset(ImagesPath.niclogo,fit: BoxFit.fill,)
+            Image.asset(ImagesPath.niclogo,fit: BoxFit.fill,),
+            //
           ],
         ),),    );
 

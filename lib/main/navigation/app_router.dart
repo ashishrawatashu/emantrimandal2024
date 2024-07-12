@@ -37,7 +37,7 @@ class AppRouter {
       //4
       case RoutePaths.itemDetailsScreen:
         return CupertinoPageRoute(
-          builder: (context) => const ItemDetailsScreen(itemIndex: 0,),
+          builder: (context) => const ItemDetailsScreen(itemId: "",),
           settings: const RouteSettings(name: RoutePaths.itemDetailsScreen),
         );
 

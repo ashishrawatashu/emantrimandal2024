@@ -35,11 +35,9 @@ class SaveMeetingLocalDsImpl implements MeetingLocalDataSource {
           imageMinister: meetingDetailModel.imageMinister,
         );
 
-        print('DATA IS ADDED');
         await meetingBox.add(convertedTask);
         return Future.value(unit);
       } else {
-        print('Duplicate data detected');
         return Future.value(null);
       }
 

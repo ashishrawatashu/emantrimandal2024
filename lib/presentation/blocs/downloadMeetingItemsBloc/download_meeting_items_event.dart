@@ -9,6 +9,10 @@ class GetMeetingItemsEvent extends DownloadMeetingItemsEvent {
 
 }
 
+class GetMeetingItemsBackgroundEvent extends DownloadMeetingItemsEvent {
+
+}
+
 
 //saveDetails
 class AddDepartmentsEvent extends DownloadMeetingItemsEvent {

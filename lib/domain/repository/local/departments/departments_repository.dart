@@ -5,5 +5,5 @@ import 'package:emantrimandal/data/model/getMeetingsItemsModel/departments_model
 abstract class DepartmentsRepository {
   Future<Either<Failure, List<DepartmentsModel>>> getDepartments();
   Future<Either<Failure, Unit>> addDepartments(DepartmentsModel departmentList);
-
+  Future<Either<Failure, Unit>> deleteAllDepartments();
 }

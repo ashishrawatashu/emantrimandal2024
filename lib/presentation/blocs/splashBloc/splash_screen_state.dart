@@ -53,12 +53,11 @@ class GenerateTokenHasData extends SplashScreenState {
 
 
 class GenerateTokenHasNoData extends SplashScreenState {
-  final GenerateTokenModel result;
 
-  GenerateTokenHasNoData(this.result);
+  GenerateTokenHasNoData();
 
   @override
-  List<Object?> get props => [result];
+  List<Object?> get props => [];
 }
 
 //GetDetails

@@ -49,6 +49,9 @@ import '../../data/repository/remote/get_meeting_items_repo_impl.dart';
 import '../../domain/repository/remote/generateToken/generate_token_repository.dart';
 import '../../domain/repository/remote/getDetails/get_details_repository.dart';
 import '../../domain/repository/remote/getMeetingsItems/get_metings_items_repository.dart';
+import '../../domain/usecase/local/delete_all_departments_usecase.dart';
+import '../../domain/usecase/local/delete_all_items_details_usecase.dart';
+import '../../domain/usecase/local/delete_all_items_usecase.dart';
 import '../../domain/usecase/remote/get_token_usecase.dart';
 import '../../domain/usecase/local/save_meeting_details_usecase.dart';
 import 'package:get_it/get_it.dart';
@@ -81,6 +84,9 @@ Future<void> initDependencies() async {
   injector.registerLazySingleton(() => GetItemsByDeptIdUseCase(itemsLocalRepository: injector()));
   injector.registerLazySingleton(() => AddItemsDetailsUseCase(itemsDetailsLocalRepository: injector()));
   injector.registerLazySingleton(() => GetItemsDetailsByItemIdUseCase( itemsLocalRepository: injector()));
+  injector.registerLazySingleton(() => DeleteAllDepartmentsUseCase(departmentsRepository:injector()));
+  injector.registerLazySingleton(() => DeleteAllItemsDetailsUseCase(itemsDetailsLocalRepository:injector()));
+  injector.registerLazySingleton(() => DeleteAllItemsUseCase(itemsLocalRepository:injector()));
 
 
   ///remote///
@@ -107,9 +113,9 @@ Future<void> initDependencies() async {
 
   /// BloC ///
   injector.registerFactory(() => SplashScreenBloc(injector(),injector(),injector(),injector()));
-  injector.registerFactory(() => DownloadMeetingItemsBloc(injector(),injector(),injector(),injector()));
+  injector.registerFactory(() => DownloadMeetingItemsBloc(injector(),injector(),injector(),injector(),injector(),injector(),injector()));
   injector.registerFactory(() => MantriDashboardBloc(injector()));
-  injector.registerFactory(() => ItemDetailsBloc());
+  injector.registerFactory(() => ItemDetailsBloc(injector()));
   injector.registerFactory(() => DepartmentItemListBloc());
   injector.registerFactory(() => MantriInfoBloc());
   injector.registerFactory(() => ItemsBloc(injector(),injector()));

@@ -20,7 +20,7 @@ abstract class AppModule {
         responseBody: true,
         responseHeader: true,
         logPrint: (log) {
-          return debugPrint(log as String);
+           // return debugPrint(log as String);
         },
       );
 

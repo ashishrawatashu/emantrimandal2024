@@ -26,6 +26,7 @@ class _DownloadMeetingItemsScreenState extends State<DownloadMeetingItemsScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       body: downloadScreenBody(),
       floatingActionButton: Container(
         height: 80,
@@ -46,8 +47,8 @@ class _DownloadMeetingItemsScreenState extends State<DownloadMeetingItemsScreen>
       children: [
         Container(
           height: 80,
-
           decoration: BoxDecoration(
+            color: Colors.white,
             borderRadius: BorderRadius.circular(5), // Adjusts the radius of corners
             border: Border.all(
               color: Colors.deepOrange, // You can set border color here
@@ -107,11 +108,12 @@ class _DownloadMeetingItemsScreenState extends State<DownloadMeetingItemsScreen>
               listener: (context,state){
                 if(state is NavigateToDownloadScreenToMantriInfoState){
                   Navigator.pushNamed(context, RoutePaths.mantriInfoScreen);
-                  // Future.delayed(const Duration(seconds: 2), () {
-                  //
-                  // });
                 }else if(state is GetMeetingItemsHasNoData){
-                  Future.delayed(const Duration(seconds: 2), () {
+                  Future.delayed(const Duration(seconds: 3), () {
+                    Navigator.pushNamed(context, RoutePaths.errorScreen);
+                  });
+                }else if(state is GetMeetingItemsError){
+                  Future.delayed(const Duration(seconds: 3), () {
                     Navigator.pushNamed(context, RoutePaths.errorScreen);
                   });
                 }
@@ -123,16 +125,21 @@ class _DownloadMeetingItemsScreenState extends State<DownloadMeetingItemsScreen>
                     children: [
                       Card(
                         child: Container(
-                          height: 150,
-                          width: 150,
+                          height: 180,
+                          width: 180,
                           child: Padding(
                             padding: const EdgeInsets.all(30.0),
                             child: CircularProgressIndicator(
+                              color: Colors.deepOrange,
+                              strokeWidth: 8.0,
                             ),
                           ),
                         ),
                       ),
-                      Text("Please wait....")
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text("कृपया प्रतीक्षा करें....",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20,color: Colors.deepOrange),),
+                      )
                     ],
                   )
                 );

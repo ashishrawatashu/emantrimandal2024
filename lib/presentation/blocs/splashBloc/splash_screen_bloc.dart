@@ -4,12 +4,9 @@ import 'package:emantrimandal/data/model/generateToken/generate_token_model.dart
 import 'package:emantrimandal/data/model/getDetailsModel/meetings_details_model.dart';
 import 'package:emantrimandal/domain/entity/remote/request_params/generate_token_params.dart';
 import 'package:bloc/bloc.dart';
-import 'package:emantrimandal/domain/usecase/local/add_departments_usecase.dart';
-import 'package:emantrimandal/domain/usecase/local/get_departments_usecase.dart';
 import 'package:emantrimandal/domain/usecase/local/save_meeting_details_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:emantrimandal/domain/entity/remote/request_params/get_details_params.dart';
-import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import '../../../core/error/failure.dart';
 import '../../../core/error/network_error.dart';
@@ -55,7 +52,7 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
       final result = await _generateTokenUseCase.execute(params: generateTokenParams);
       result.fold(
         (error) {
-          MySingleton().ERROR_MSG = "ख़ॆद है | तकनीकी ञुटि आ जाने के कारण कार्य पूरा नही हो पाया,\nकृपया मंत्रिपरिषद विभाग से संपर्क करे |";
+          MySingleton().ERROR_MSG = MySingleton().technicalError;
           emit(NavigateSplashToErrorScreenState());
         },
         (data) {
@@ -64,72 +61,69 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
             this.add(GetDetailsFetchEvent());
             emit(GenerateTokenHasData(data));
           } else  {
-            MySingleton().ERROR_MSG = "यह टैब इस प्रणाली मे पंजीकृत नहीं है,\nकृपया मंत्रिपरिषद विभाग से संपर्क करे |";
-            emit(GenerateTokenHasNoData(data));
+            MySingleton().ERROR_MSG = MySingleton().invalidTab;
             emit(NavigateSplashToErrorScreenState());
           }
         },
       );
     } catch(e) {
-      MySingleton().ERROR_MSG = "यह टैब इस प्रणाली मे पंजीकृत नहीं है,\nकृपया मंत्रिपरिषद विभाग से संपर्क करे |";
+      MySingleton().ERROR_MSG =MySingleton().technicalError;
       emit(NavigateSplashToErrorScreenState());
       // macAddress = 'Failed to get mac address.';
     }
   }
 
-  FutureOr<void> getDetailsFetchEvent(
-      GetDetailsFetchEvent event, Emitter<SplashScreenState> emit) async {
+  FutureOr<void> getDetailsFetchEvent(GetDetailsFetchEvent event, Emitter<SplashScreenState> emit) async {
     emit(GetDetailsLoading());
-    GetDetailsParams getDetailsParams = GetDetailsParams(
-        MAC: MySingleton().MAC,
-        Token: MySingleton().TOKEN,
-        MACKey: MySingleton().MACKEY,
-        Lat: "0.0",
-        Longt: "0.0");
-    final result = await _getDetailsUseCase.execute(params: getDetailsParams);
-    result.fold(
-      (error) {
-        emit(GetDetailsError(error));
-      },
-      (data) {
-        if (data.code == "100") {
-          emit(GetDetailsHasData(data));
-          MySingleton().getDetailsModel = data;
-          this.add(SaveMeetingDetailsEvent(data.meetingDetail![0]));
-          emit(NavigateSplashToDownloadScreenState());
-        } else if (data.code == "101") {
-          emit(GetDetailsHasNoData(data));
+
+    try{
+      GetDetailsParams getDetailsParams = GetDetailsParams(MAC: MySingleton().MAC, Token: MySingleton().TOKEN, MACKey: MySingleton().MACKEY,
+          Lat: "0.0",
+          Longt: "0.0");
+      final result = await _getDetailsUseCase.execute(params: getDetailsParams);
+      result.fold(
+            (error) {
+          MySingleton().ERROR_MSG = MySingleton().technicalError;
           emit(NavigateSplashToErrorScreenState());
-        }
-      },
-    );
+        },
+            (data) {
+          if (data.code == "100") {
+            MySingleton().getDetailsModel = data;
+            this.add(SaveMeetingDetailsEvent(data.meetingDetail![0]));
+            emit(NavigateSplashToDownloadScreenState());
+          } else {
+            MySingleton().ERROR_MSG =  MySingleton().noMeetingMsg;
+            emit(NavigateSplashToErrorScreenState());
+          }
+        },
+      );
+    }catch(e){
+      MySingleton().ERROR_MSG =MySingleton().technicalError;
+      emit(NavigateSplashToErrorScreenState());
+    }
+
   }
 
   FutureOr<void> saveMeetingDetailsEvent(
       SaveMeetingDetailsEvent event, Emitter<SplashScreenState> emit) async {
     emit(SaveMeetingDetailsLoadingState());
-    final result =
-        await _saveMeetingDetailsUseCase.call(event.meetingDetailModel);
+    final result = await _saveMeetingDetailsUseCase.call(event.meetingDetailModel);
     result.fold(
       (error) {
-        print(error);
         emit(SaveMeetingDetailsErrorState(error));
       },
       (data) {
-        print(data);
         emit(SaveMeetingDetailsSuccessState());
         this.add(GetMeetingDetailsEvent());
       },
     );
   }
 
-  FutureOr<void> getMeetingDetailsEvent(
-      GetMeetingDetailsEvent event, Emitter<SplashScreenState> emit) async {
+  FutureOr<void> getMeetingDetailsEvent(GetMeetingDetailsEvent event, Emitter<SplashScreenState> emit) async {
     emit(GetMeetingDetailsLoadingState());
     final result = await _getMeetingDetailsUseCase.call(const DefaultParams());
     result.fold(
       (error) {
-        print(error);
         emit(GetMeetingDetailsErrorState(error));
       },
       (data) {

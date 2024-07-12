@@ -35,4 +35,15 @@ class DepartmentsRepositoryImpl implements DepartmentsRepository {
       return Left(NoDataFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, Unit>> deleteAllDepartments() async {
+    try{
+      final response = await departmentsLocalDataSource.deleteAllDepartments();
+      return Right(response);
+    } on NoDataException {
+      return Left(NoDataFailure());
+    }
+  }
+
 }

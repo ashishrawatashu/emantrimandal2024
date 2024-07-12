@@ -6,5 +6,5 @@ abstract class ItemsLocalDataSource {
   Future<Unit> addItems(ItemsModel itemsModel);
   Future<List<ItemsModel>> getAllItems();
   Future<List<ItemsModel>> getItemsByDeptId(String deptId);
-  Future<Unit> deleteAllMeeting();
+  Future<Unit> deleteAllItems();
 }

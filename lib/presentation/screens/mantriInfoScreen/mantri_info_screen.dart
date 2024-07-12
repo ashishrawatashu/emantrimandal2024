@@ -18,13 +18,13 @@ class _MantriInfoScreenState extends State<MantriInfoScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.delayed(const Duration(seconds: 13), () {
       if(MySingleton().getMeetingsItemsModel.code=="100"){
         Navigator.pushNamed(context, RoutePaths.mantriDashboardScreen);
       }else {
-        Navigator.pushNamed(context, RoutePaths.errorScreen);
+        // Navigator.pushNamed(context, RoutePaths.mantriDashboardScreen);
+        Navigator.pushNamed(context, RoutePaths.errorScreen,arguments: "String");
       }
     });
   }
