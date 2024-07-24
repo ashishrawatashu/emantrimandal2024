@@ -235,7 +235,12 @@ class _MantriDashboardScreenState extends State<MantriDashboardScreen> {
             itemCount: items.length,
             itemBuilder: (BuildContext context, int index) {
               var item = items[index];
-              String deptName= departmentsModelList.firstWhere((department) => department.deptID.toString() == item.deptID.toString(),)?.deptName ?? '';
+              String deptName = departmentsModelList
+                  .firstWhere(
+                      (department) => department.deptID.toString() == item.deptID.toString(),
+                  orElse: () => DepartmentsModel(deptID: "1", deptName: '', noOfItems: 0, minister: '')
+              )
+                  .deptName ?? '';
               return Visibility(
                 child: GestureDetector(
                   onTap: () {

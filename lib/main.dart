@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:emantrimandal/core/utils/get_mac_address.dart';
 import 'package:emantrimandal/presentation/blocs/itemsBloc/items_bloc.dart';
 import 'package:emantrimandal/presentation/blocs/splashBloc/splash_screen_bloc.dart';
 import 'package:emantrimandal/presentation/blocs/departmentItemListBloc/department_item_list_bloc.dart';
@@ -14,23 +12,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/di/inject.dart';
-import 'core/utils/singleton.dart';
-void main() async {
+import 'core/utils/app_control.dart';
 
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initDependencies();
   I.configureDependencies();
-  // if (Platform.isAndroid) {
-  //   MacAddress.getMacAddress();
-  // } else if (Platform.isWindows) {
-  //   MySingleton().MAC = await MacAddress.getMacAddressForWindows();
-  // }
+  if (Platform.isWindows) {
+    await AppControlManager.disablePrinters();
+    await AppControlManager.disableScreenCapture();
+  }
   runApp(const MyApp());
-
 }
-
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -69,8 +62,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
 
 // import 'package:flutter/material.dart';
 // import 'package:pip_view/pip_view.dart';
