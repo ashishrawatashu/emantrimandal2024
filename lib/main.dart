@@ -18,10 +18,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initDependencies();
   I.configureDependencies();
-  if (Platform.isWindows) {
-    await AppControlManager.disablePrinters();
-    await AppControlManager.disableScreenCapture();
-  }
+  // if (Platform.isWindows) {
+  //   await AppControlManager.disablePrinters();
+  //   await AppControlManager.disableScreenCapture();
+  // }
   runApp(const MyApp());
 }
 

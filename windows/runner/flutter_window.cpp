@@ -8,12 +8,7 @@
 #include <flutter/method_channel.h>
 #include <flutter/method_result_functions.h>
 #include <flutter/encodable_value.h>
-#include <../standard_codec.cc>
 #include "windows.h"
-#include "windef.h"
-#include "windowsx.h"
-#include <iostream>
-#include <Windows.h>
 #include <iphlpapi.h>
 
 #pragma comment(lib, "iphlpapi.lib")
@@ -27,7 +22,7 @@ std::string getMacAddress() {
     IP_ADAPTER_INFO AdapterInfo[16]; // Allocate information for up to 16 NICs
     DWORD dwBufLen = sizeof(AdapterInfo); // Save the size of the buffer
     DWORD dwStatus = GetAdaptersInfo(AdapterInfo, &dwBufLen); // Call GetAdapterInfo
-    
+
     if (dwStatus != ERROR_SUCCESS) {
         std::cerr << "GetAdaptersInfo failed with error: " << dwStatus << std::endl;
         return "";
@@ -37,44 +32,90 @@ std::string getMacAddress() {
     if (pAdapterInfo) {
         char macAddr[18]; // MAC address is 6 bytes (48 bits) plus 5 colons and null terminator
         sprintf_s(macAddr, "%02X:%02X:%02X:%02X:%02X:%02X",
-            pAdapterInfo->Address[0], pAdapterInfo->Address[1],
-            pAdapterInfo->Address[2], pAdapterInfo->Address[3],
-            pAdapterInfo->Address[4], pAdapterInfo->Address[5]);
+                  pAdapterInfo->Address[0], pAdapterInfo->Address[1],
+                  pAdapterInfo->Address[2], pAdapterInfo->Address[3],
+                  pAdapterInfo->Address[4], pAdapterInfo->Address[5]);
         return std::string(macAddr);
     }
 
     return "";
 }
 
-void initMethodChannel(flutter::FlutterEngine* flutter_instance) {
+void DisableScreenCapture() {
+    HWND hwnd = GetActiveWindow();
+    DWORD style = GetWindowLong(hwnd, GWL_EXSTYLE);
+    style |= WS_EX_NOREDIRECTIONBITMAP;
+    SetWindowLong(hwnd, GWL_EXSTYLE, style);
+    SetLayeredWindowAttributes(hwnd, 0, 255, LWA_ALPHA);
+}
 
+void EnableScreenCapture() {
+    HWND hwnd = GetActiveWindow();
+    DWORD style = GetWindowLong(hwnd, GWL_EXSTYLE);
+    style &= ~WS_EX_NOREDIRECTIONBITMAP;
+    SetWindowLong(hwnd, GWL_EXSTYLE, style);
+    SetLayeredWindowAttributes(hwnd, 0, 255, LWA_ALPHA);
+}
+
+void DisablePrinters() {
+    HANDLE hPrinter;
+    PRINTER_DEFAULTS pd;
+    PRINTER_INFO_2* pinfo = NULL;
+    DWORD pcbNeeded = 0;
+    DWORD pcReturned = 0;
+
+    pd.pDatatype = NULL;
+    pd.pDevMode = NULL;
+    pd.DesiredAccess = PRINTER_ACCESS_ADMINISTER;
+
+    EnumPrinters(PRINTER_ENUM_LOCAL | PRINTER_ENUM_CONNECTIONS, NULL, 2, NULL, 0, &pcbNeeded, &pcReturned);
+    pinfo = (PRINTER_INFO_2*)malloc(pcbNeeded);
+    if (pinfo == NULL) return;
+
+    if (!EnumPrinters(PRINTER_ENUM_LOCAL | PRINTER_ENUM_CONNECTIONS, NULL, 2, (LPBYTE)pinfo, pcbNeeded, &pcbNeeded, &pcReturned)) {
+        free(pinfo);
+        return;
+    }
+
+    for (DWORD i = 0; i < pcReturned; i++) {
+        if (OpenPrinter(pinfo[i].pPrinterName, &hPrinter, &pd)) {
+            pinfo[i].Attributes |= PRINTER_ATTRIBUTE_WORK_OFFLINE;
+            SetPrinter(hPrinter, 2, (LPBYTE)&pinfo[i], 0);
+            ClosePrinter(hPrinter);
+        }
+    }
+
+    free(pinfo);
+}
+
+void initMethodChannel(flutter::FlutterEngine* flutter_instance) {
     const static std::string channel_name("mac_address");
     flutter::BinaryMessenger* messenger = flutter_instance->messenger();
     const flutter::StandardMethodCodec* codec = &flutter::StandardMethodCodec::GetInstance();
-    auto channel = std::make_unique<flutter::MethodChannel<>>(messenger ,channel_name ,codec);
+    auto channel = std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
+            messenger, channel_name, codec);
 
     channel->SetMethodCallHandler(
-            [](const flutter::MethodCall<>& call,
-               std::unique_ptr<flutter::MethodResult<>> result) {
-
-                // check method name called from dart
+            [](const flutter::MethodCall<flutter::EncodableValue>& call,
+               std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
                 if (call.method_name().compare("getMacAddress") == 0) {
-
-                 std::string macAddress = getMacAddress();
-                 if (!macAddress.empty()) {
-                    flutter::EncodableValue res(macAddress);
-                    result->Success(res);
-                     } else {
-                     flutter::EncodableValue res("N/A");
-                     result->Success(res);
-                    }
-                }
-                else {
+                    std::string macAddress = getMacAddress();
+                    result->Success(macAddress.empty() ? flutter::EncodableValue("N/A") : flutter::EncodableValue(macAddress));
+                } else if (call.method_name().compare("disableScreenCapture") == 0) {
+                    DisableScreenCapture();
+                    result->Success();
+                } else if (call.method_name().compare("enableScreenCapture") == 0) {
+                    EnableScreenCapture();
+                    result->Success();
+                } else if (call.method_name().compare("disablePrinters") == 0) {
+                    DisablePrinters();
+                    result->Success();
+                } else {
                     result->NotImplemented();
                 }
-            }
-    );
+            });
 }
+
 bool FlutterWindow::OnCreate() {
     if (!Win32Window::OnCreate()) {
         return false;
@@ -116,8 +157,7 @@ FlutterWindow::MessageHandler(HWND hwnd, UINT const message,
 // Give Flutter, including plugins, an opportunity to handle window messages.
 if (flutter_controller_) {
 std::optional<LRESULT> result =
-        flutter_controller_->HandleTopLevelWindowProc(hwnd, message, wparam,
-                                                      lparam);
+        flutter_controller_->HandleTopLevelWindowProc(hwnd, message, wparam, lparam);
 if (result) {
 return *result;
 }
