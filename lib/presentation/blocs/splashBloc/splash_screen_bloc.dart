@@ -40,12 +40,11 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
   FutureOr<void> generateTokenDataEvent(GenerateTokenDataEvent event, Emitter<SplashScreenState> emit) async {
 
     try {
-      // if (Platform.isAndroid) {
-      //   MacAddress.getMacAddress();
-      //   print(MySingleton().MAC+"hakshghjkags");
-      // } else if (Platform.isWindows) {
-      //   MySingleton().MAC = await MacAddress.getMacAddressForWindows();
-      // }
+      if (Platform.isAndroid) {
+        MacAddress.getMacAddress();
+      } else if (Platform.isWindows) {
+        MySingleton().MAC = await MacAddress.getMacAddressForWindows();
+      }
 
       emit(GenerateTokenLoading());
 

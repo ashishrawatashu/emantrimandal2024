@@ -14,10 +14,8 @@ class MySingleton{
   MySingleton._internal();
 
   String TOKEN = "";
-  String MAC = "00:1A:3B:3C:4D:5E";
-  // String MAC = "00:1A:3B:3C:4E:5E";
-  // String MAC = "01:00:00:00:00:00";
-  // String MAC = "00:1A:3B:3C:4B:5A";
+  // String MAC = "00:1A:3B:3C:4D:5E";
+  String MAC = "";
   String MACKEY = "Cdaytest@123";
 
   // ख़ॆद है | तकनीकी ञुटि आ जाने के कारण कार्य पूरा नही हो पाया,\nकृपया मंत्रिपरिषद विभाग से संपर्क करे |

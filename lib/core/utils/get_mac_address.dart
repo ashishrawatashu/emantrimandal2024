@@ -31,7 +31,6 @@ class MacAddress {
   }
 
 
-
   static Future<String> getMacAddressForWindows() async {
     MethodChannel channel = const MethodChannel('mac_address');
     try {
