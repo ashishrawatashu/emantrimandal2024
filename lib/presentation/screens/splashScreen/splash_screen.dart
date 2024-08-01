@@ -1,7 +1,6 @@
 import 'package:emantrimandal/core/constants/images_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../core/utils/singleton.dart';
 import '../../../main/navigation/route_paths.dart';
 import '../../blocs/splashBloc/splash_screen_bloc.dart';
 
